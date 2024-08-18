@@ -1,0 +1,25 @@
+---
+- name: Get the control plane endpoint
+  shell: "hostname -I | awk '{print $1}'"
+  register: control_plane_ip
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: Get the kubeadm join token
+  shell: "kubeadm token create"
+  register: kubeadm_token
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: Get the discovery token CA cert hash
+  shell: "openssl x509 -pubkey -in /etc/kubernetes/pki/ca.crt | openssl rsa -pubin -outform der 2>/dev/null | openssl dgst -sha256 -hex | sed 's/^.* //'"
+  register: ca_cert_hash
+  delegate_to: "{{ inventory_hostname }}"
+
+- name: Set global control plane facts
+  set_fact:
+    control_plane_endpoint: "{{ control_plane_ip.stdout }}:6443"
+    token: "{{ kubeadm_token.stdout }}"
+    discovery_token_ca_cert_hash: "sha256:{{ ca_cert_hash.stdout }}"
+
+- name: Debug control plane information
+  debug:
+    msg: "Control Plane IP: {{ control_plane_endpoint }}, Token: {{ token }}, CA Cert Hash: {{ discovery_token_ca_cert_hash }}"

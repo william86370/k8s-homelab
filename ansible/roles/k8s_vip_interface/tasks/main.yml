@@ -1,0 +1,13 @@
+- name: Ensure netplan directory exists
+  file:
+    path: /etc/netplan
+    state: directory
+
+- name: Create netplan configuration for VLAN 10 on eth0
+  template:
+    src: 51-k8s-vip-vlans.yaml.j2
+    dest: /etc/netplan/51-k8s-vip-vlans.yaml
+    mode: '0640'
+
+- name: Apply netplan configuration
+  command: netplan apply

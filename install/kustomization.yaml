@@ -1,0 +1,7 @@
+
+# Fkux installed resources
+resources:
+  - metallb
+  - cert-manager
+  - ingress-nginx
+  - headlamp

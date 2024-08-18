@@ -1,0 +1,48 @@
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: headlamp
+  namespace: flux-system
+spec:
+  releaseName: headlamp
+  chart:
+    spec:
+      chart: headlamp
+      sourceRef:
+        kind: HelmRepository
+        name: headlamp
+        namespace: flux-system
+      version: "0.24.0"
+  interval: 15m
+  targetNamespace: headlamp
+  install:
+    createNamespace: true
+  values:
+    replicaCount: 1 # <--- TODO Change this value to 3
+    ingress:
+      enabled: true
+      hosts:
+        - host: headlamp.lootbot.cloud
+          paths:
+            - path: /
+              type: Prefix
+      annotations:
+        kubernetes.io/ingress.class: nginx
+    affinity:
+      podAntiAffinity:
+        perferedDuringSchedulingIgnoredDuringExecution:
+          - labelSelector:
+              matchExpressions:
+                - key: app.kubernetes.io/name
+                  operator: In
+                  values:
+                    - headlamp
+            topologyKey: kubernetes.io/hostname
+      # nodeAffinity:
+      #   requiredDuringSchedulingIgnoredDuringExecution:
+      #     nodeSelectorTerms:
+      #       - matchExpressions:
+      #           - key: kubernetes.io/arch
+      #             operator: In
+      #             values:
+      #               - amd64

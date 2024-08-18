@@ -1,0 +1,30 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2beta1
+kind: HelmRelease
+metadata:
+  name: ingress-nginx
+  namespace: flux-system
+spec:
+  releaseName: ingress-nginx
+  chart:
+    spec:
+      chart: ingress-nginx
+      sourceRef:
+        kind: HelmRepository
+        name: ingress-nginx
+        namespace: flux-system
+      version: '4.11.x'
+  interval: 30m
+  targetNamespace: ingress-nginx
+  install:
+    createNamespace: true
+  values:
+    controller:
+      kind: Deployment
+      replicaCount: 1
+      service:
+        type: LoadBalancer
+      admissionWebhooks:
+        enabled: false
+      metrics:
+        enabled: false

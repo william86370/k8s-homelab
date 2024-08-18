@@ -1,0 +1,16 @@
+---
+apiVersion: kubeadm.k8s.io/v1beta4
+kind: ClusterConfiguration
+clusterName: lootbot-cloud
+kubernetesVersion: stable
+controlPlaneEndpoint: "kubernetes.lootbot.cloud:6443"
+networking:
+  podSubnet: 10.244.0.0/16
+  serviceSubnet: 10.245.0.0/16
+apiServer:
+  certSANs:
+  - "kubernetes.lootbot.cloud"  # Add load balancer DNS for secure API access
+---
+kind: KubeletConfiguration
+apiVersion: kubelet.config.k8s.io/v1beta1
+cgroupDriver: systemd
