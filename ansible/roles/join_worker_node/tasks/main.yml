@@ -1,4 +1,18 @@
 ---
+- name: Check if the control plane is reachable
+  command: "curl -s -k --connect-timeout 5 https://{{ hostvars['control-plane-01']['control_plane_endpoint'] }}/healthz"
+  register: cluster_reachable
+  ignore_errors: true
+  changed_when: false
+
+- name: Debug control plane reachability
+  debug:
+    msg: "Control plane is reachable: {{ cluster_reachable.rc == 0 }}"
+    
+- name: Skip joining tasks if the control plane is not reachable
+  meta: end_play
+  when: cluster_reachable.rc != 0
+
 - name: Check if the node is already part of the cluster
   command: "kubectl get node $(hostname -s) --kubeconfig=/etc/kubernetes/kubelet.conf"
   register: node_check

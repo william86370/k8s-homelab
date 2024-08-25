@@ -1,0 +1,4 @@
+---
+# vars/main.yml
+
+reboot_required_servers: []

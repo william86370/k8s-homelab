@@ -1,5 +1,0 @@
----
-- hosts: workers
-  become: yes
-  roles:
-    - k8s_vip_interface

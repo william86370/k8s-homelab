@@ -1,0 +1,28 @@
+---
+- name: Ensure kubeadm config directory exists
+  file:
+    path: "{{ kubeadm_config_file | dirname }}"
+    state: directory
+    mode: '0755'
+
+- name: Copy kubeadm config to the remote host
+  copy:
+    src: kubeadm-config.yaml
+    dest: "{{ kubeadm_config_file }}"
+    mode: '0644'
+
+- name: Initialize the Kubernetes control plane if not already done
+  command: "{{ kubeadm_init_command }}"
+  args:
+    creates: "/etc/kubernetes/manifests/kube-apiserver.yaml"
+
+- name: Mark initialization as successful
+  file:
+    path: "/etc/kubernetes/.kubeadm_initialized"
+    state: touch
+    
+- name: Fetch kubeconfig from the remote host
+  fetch:
+    src: "/etc/kubernetes/admin.conf"
+    dest: "./kubeconfig.yaml"
+    flat: yes

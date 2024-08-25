@@ -1,8 +1,10 @@
 [control-plane]
-control-plane-01 ansible_host=192.168.1.252 ansible_user=loot
+control-plane-01 ansible_host=10.10.201.252 ansible_user=loot
 
 [workers]
-lootstore-1 ansible_host=192.168.1.222 ansible_user=wawrig2
+worker-r440 ansible_host=10.10.201.6 ansible_user=loot
+worker-r620 ansible_host=10.10.201.155 ansible_user=loot
+worker-r820 ansible_host=10.10.201.10 ansible_user=loot
 
 [all:children]
 control-plane

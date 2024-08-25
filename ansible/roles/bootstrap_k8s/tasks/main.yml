@@ -1,0 +1,9 @@
+---
+- name: Check if the cluster is already Bootstraped 
+  stat:
+    path: "/etc/kubernetes/.kubeadm_initialized"
+  register: kubeadm_initialized
+
+- name: Bootstrap the Kubernetes control plane
+  include_tasks: bootstrap.yml
+  when: not kubeadm_initialized.stat.exists
