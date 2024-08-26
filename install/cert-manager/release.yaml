@@ -21,7 +21,7 @@ spec:
   values:
     crds:
       enabled: true
-    replicaCount: 1 # <--- TODO Change this value to 3
+    replicaCount: 3 # <--- TODO Change this value to 3
     podDisruptionBudget:
       enabled: true
       minAvailable: 1
@@ -38,7 +38,7 @@ spec:
     strategy:
       type: Recreate
     webhook:
-      replicaCount: 1 # <--- TODO Change this value to 3
+      replicaCount: 3 # <--- TODO Change this value to 3
       podDisruptionBudget:
         enabled: true
         minAvailable: 1
@@ -55,7 +55,7 @@ spec:
       strategy:
         type: Recreate
     cainjector:
-      replicaCount: 1 # <--- TODO Change this value to 3
+      replicaCount: 3 # <--- TODO Change this value to 3
       podDisruptionBudget:
         enabled: true
         minAvailable: 1

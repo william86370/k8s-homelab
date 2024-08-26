@@ -1,0 +1,13 @@
+---
+
+- name: Drain the node
+  shell: "kubectl --kubeconfig=/etc/kubernetes/kubelet.conf  drain $( hostname -s) --ignore-daemonsets --delete-local-data --force --grace-period=0"
+  ignore_errors: true
+
+- name: Remove the node from the cluster
+  shell: "kubectl --kubeconfig=/etc/kubernetes/kubelet.conf  delete node $( hostname -s)"
+  ignore_errors: true
+
+- name: reset the node
+  shell: "kubeadm reset -f"
+  ignore_errors: true

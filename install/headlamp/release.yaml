@@ -18,7 +18,7 @@ spec:
   install:
     createNamespace: true
   values:
-    replicaCount: 1 # <--- TODO Change this value to 3
+    replicaCount: 3 # <--- TODO Change this value to 3
     ingress:
       enabled: true
       hosts:

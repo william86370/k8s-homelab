@@ -1,8 +1,9 @@
-# This is the network config written by 'subiquity'
 network:
   version: 2
   vlans:
-    vlan10:
-      id: 10
-      link: eno1
+    k8s-vip:
+      id: 199
+      link: {{ interface_name }}
       dhcp4: yes
+      dhcp4-overrides:
+        use-routes: false

@@ -1,6 +1,7 @@
 
 # Fkux installed resources
 resources:
+  - metrics-server
   - metallb
   - cert-manager
   - ingress-nginx
