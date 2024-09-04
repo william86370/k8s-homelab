@@ -20,9 +20,3 @@
   file:
     path: "/etc/kubernetes/.kubeadm_initialized"
     state: touch
-    
-- name: Fetch kubeconfig from the remote host
-  fetch:
-    src: "/etc/kubernetes/admin.conf"
-    dest: "./kubeconfig.yaml"
-    flat: yes

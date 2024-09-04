@@ -1,5 +1,13 @@
 
-# Fkux installed resources
+# vars:
+#   - name: REPLICA_COUNT
+#     objref:
+#       kind: ConfigMap
+#       name: my-config
+#       apiVersion: v1
+#     fieldref:
+#       fieldpath: data.REPLICA_COUNT
+# Flux installed resources
 resources:
   - metrics-server
   - metallb
@@ -7,3 +15,7 @@ resources:
   - ingress-nginx
   - headlamp
   - rook-ceph
+
+# TODO 
+# create a global configmap that s kinda like a helm values yaml that all of the helmrealeases can use in their templates
+# so it would define the number of replicas and in each helmrelease i

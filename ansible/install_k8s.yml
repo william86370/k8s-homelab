@@ -33,7 +33,7 @@
     - join_worker_node
 
 - name: Configure the Kubernetes VIP interface
-  hosts: workers
+  hosts: all
   become: yes
   gather_facts: no
   roles:

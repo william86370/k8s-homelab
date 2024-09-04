@@ -7,3 +7,10 @@
 - name: Bootstrap the Kubernetes control plane
   include_tasks: bootstrap.yml
   when: not kubeadm_initialized.stat.exists
+
+- name: Fetch kubeconfig from the remote host
+  fetch:
+    src: "/etc/kubernetes/admin.conf"
+    dest: "./kubeconfig.yaml"
+    flat: yes
+  when: kubeadm_initialized.stat.exists

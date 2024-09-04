@@ -1,0 +1,7 @@
+---
+# include tasks
+- name: install helm
+  include_tasks: helm.yml
+
+- name: install kubectl 
+  include_tasks: kubectl.yml
