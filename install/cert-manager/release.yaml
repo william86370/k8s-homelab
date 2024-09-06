@@ -18,10 +18,22 @@ spec:
   targetNamespace: cert-manager
   install:
     createNamespace: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: global-config
+      valuesKey: replicas
+      targetPath: replicaCount
+    - kind: ConfigMap
+      name: global-config
+      valuesKey: replicas
+      targetPath: webhook.replicaCount
+    - kind: ConfigMap
+      name: global-config
+      valuesKey: replicas
+      targetPath: cainjector.replicaCount
   values:
     crds:
       enabled: true
-    replicaCount: 3 # <--- TODO Change this value to 3
     podDisruptionBudget:
       enabled: true
       minAvailable: 1
@@ -38,7 +50,6 @@ spec:
     strategy:
       type: Recreate
     webhook:
-      replicaCount: 3 # <--- TODO Change this value to 3
       podDisruptionBudget:
         enabled: true
         minAvailable: 1
@@ -55,7 +66,6 @@ spec:
       strategy:
         type: Recreate
     cainjector:
-      replicaCount: 3 # <--- TODO Change this value to 3
       podDisruptionBudget:
         enabled: true
         minAvailable: 1

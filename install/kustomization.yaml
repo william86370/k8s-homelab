@@ -1,12 +1,13 @@
 
-# vars:
-#   - name: REPLICA_COUNT
-#     objref:
-#       kind: ConfigMap
-#       name: my-config
-#       apiVersion: v1
-#     fieldref:
-#       fieldpath: data.REPLICA_COUNT
+apiVersion: kustomize.config.k8s.io/v1beta1
+kind: Kustomization
+
+configMapGenerator:
+  - name: global-config
+    namespace: flux-system
+    literals:
+      - replicas=1
+
 # Flux installed resources
 resources:
   - metrics-server
@@ -15,7 +16,9 @@ resources:
   - ingress-nginx
   - headlamp
   - rook-ceph
+  - capacitor
 
-# TODO 
-# create a global configmap that s kinda like a helm values yaml that all of the helmrealeases can use in their templates
-# so it would define the number of replicas and in each helmrelease i
+# so it would define the number of replicas and in each helmrelease
+# then we can use the vars in the kustomization.yaml to set the number of replicas in the helmreleases
+generatorOptions:
+  disableNameSuffixHash: true

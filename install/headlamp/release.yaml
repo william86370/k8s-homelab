@@ -17,8 +17,12 @@ spec:
   targetNamespace: headlamp
   install:
     createNamespace: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: global-config
+      valuesKey: replicas
+      targetPath: replicaCount
   values:
-    replicaCount: 3 # <--- TODO Change this value to 3
     ingress:
       enabled: true
       hosts:

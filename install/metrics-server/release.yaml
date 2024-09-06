@@ -18,8 +18,12 @@ spec:
   targetNamespace: metrics-server
   install:
     createNamespace: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: global-config
+      valuesKey: replicas
+      targetPath: replicas
   values:
-    replicas: 3
     podLabels:
       app: metrics-server
     args:
