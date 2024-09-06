@@ -1,0 +1,40 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: semaphore
+  namespace: flux-system
+spec:
+  releaseName: semaphore
+  chartRef:
+    kind: OCIRepository
+    name: ansible-semaphore
+    namespace: flux-system
+  interval: 60m
+  targetNamespace: semaphore-system
+  install:
+    createNamespace: true
+  valuesFrom:
+    - kind: ConfigMap
+      name: global-config
+      valuesKey: replicas
+      targetPath: replicaCount
+  values:
+    ingress:
+      enabled: true
+      hosts:
+        - host: semaphore.lootbot.cloud
+          paths:
+            - path: /
+              pathType: Prefix
+    database:
+      type: postgres
+      host: postgresql
+      port: 5432
+      usernameFromSecret: false
+      passwordKey: password
+      existingSecret: postgresql
+    postgresql:
+      enabled: true
+      # auth:
+      #   password: 

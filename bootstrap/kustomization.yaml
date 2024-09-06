@@ -1,4 +1,4 @@
 
-# Fkux installed resources
+# Flux installed resources
 resources:
-  - flux.yaml
+  - https://github.com/fluxcd/flux2/releases/download/v2.3.0/install.yaml
