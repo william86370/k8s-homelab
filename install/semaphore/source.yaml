@@ -7,3 +7,5 @@ metadata:
 spec:
   interval: 60m
   url: oci://ghcr.io/cloudhippie/charts/ansible-semaphore
+  ref:
+    semver: 10.0.x

@@ -1,3 +1,6 @@
+---
 resources:
-  - development-cluster.yaml
+  - cluster.yaml
+  - pool.yaml
+  - storageclass.yaml
   - ingress.yaml
