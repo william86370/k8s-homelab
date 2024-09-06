@@ -23,6 +23,9 @@ spec:
       valuesKey: replicas
       targetPath: replicaCount
   values:
+    resources:
+      limits: {}
+      requests: {}
     ingress:
       enabled: true
       hosts:

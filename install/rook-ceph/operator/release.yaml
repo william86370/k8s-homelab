@@ -18,3 +18,128 @@ spec:
   targetNamespace: rook-ceph
   install:
     createNamespace: true
+  values:
+    resources:
+      limits:
+        memory: 512Mi
+      requests:
+        cpu: 0m
+        memory: 0Mi
+    csi:
+      csiRBDProvisionerResource: |
+        - name : csi-provisioner
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-resizer
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-attacher
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-snapshotter
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-rbdplugin
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-omap-generator
+          resource:
+            requests: {}
+            limits: {}
+        - name : liveness-prometheus
+          resource:
+            requests: {}
+            limits: {}
+
+      # -- CEPH CSI RBD plugin resource requirement list
+      # @default -- see values.yaml
+      csiRBDPluginResource: |
+        - name : driver-registrar
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-rbdplugin
+          resource:
+            requests: {}
+            limits: {}
+        - name : liveness-prometheus
+          resource:
+            requests: {}
+            limits: {}
+
+      # -- CEPH CSI CephFS provisioner resource requirement list
+      # @default -- see values.yaml
+      csiCephFSProvisionerResource: |
+        - name : csi-provisioner
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-resizer
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-attacher
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-snapshotter
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-cephfsplugin
+          resource:
+            requests: {}
+            limits: {}
+        - name : liveness-prometheus
+          resource:
+            requests: {}
+            limits: {}
+
+      # -- CEPH CSI CephFS plugin resource requirement list
+      # @default -- see values.yaml
+      csiCephFSPluginResource: |
+        - name : driver-registrar
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-cephfsplugin
+          resource:
+            requests: {}
+            limits: {}
+        - name : liveness-prometheus
+          resource:
+            requests: {}
+            limits: {}
+
+      # -- CEPH CSI NFS provisioner resource requirement list
+      # @default -- see values.yaml
+      csiNFSProvisionerResource: |
+        - name : csi-provisioner
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-nfsplugin
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-attacher
+          resource:
+            requests: {}
+            limits: {}
+
+      # -- CEPH CSI NFS plugin resource requirement list
+      # @default -- see values.yaml
+      csiNFSPluginResource: |
+        - name : driver-registrar
+          resource:
+            requests: {}
+            limits: {}
+        - name : csi-nfsplugin
+          resource:
+            requests: {}
+            limits: {}
