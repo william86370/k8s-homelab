@@ -29,12 +29,8 @@ spec:
               pathType: Prefix
     database:
       type: postgres
-      host: postgresql
+      host: postgresql.semaphore-system.svc.cluster.local
       port: 5432
       usernameFromSecret: false
       passwordKey: password
       existingSecret: postgresql
-    postgresql:
-      enabled: true
-      # auth:
-      #   password: 

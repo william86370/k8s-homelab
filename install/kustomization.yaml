@@ -17,6 +17,7 @@ resources:
   - headlamp
   - rook-ceph
   - capacitor
+  - databases
   - semaphore
 # so it would define the number of replicas and in each helmrelease
 # then we can use the vars in the kustomization.yaml to set the number of replicas in the helmreleases
