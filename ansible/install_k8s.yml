@@ -19,18 +19,29 @@
     - install_containerd
     - install_k8s
 
-- hosts: control-plane
+- hosts: cp-leader
   become: yes
   roles:
     - bootstrap_k8s
     - control_plane_info
 
+- name: Join Server nodes to the Kubernetes cluster
+  hosts: cp-follower
+  become: yes
+  gather_facts: no
+  vars:
+    kubeadm_extra: "--control-plane"
+  roles:
+    - join_node
+
 - name: Join worker nodes to the Kubernetes cluster
   hosts: workers
   become: yes
   gather_facts: no
+  vars:
+    kubeadm_extra: ""
   roles:
-    - join_worker_node
+    - join_node
 
 - name: Configure the Kubernetes VIP interface
   hosts: all

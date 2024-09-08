@@ -1,6 +1,6 @@
 ---
 - name: Check if the control plane is reachable
-  command: "curl -s -k --connect-timeout 5 https://{{ hostvars['control-plane-01']['control_plane_endpoint'] }}/healthz"
+  command: "curl -s -k --connect-timeout 5 https://{{ hostvars['k8s-cp-1']['control_plane_endpoint'] }}/healthz"
   register: cluster_reachable
   ignore_errors: true
   changed_when: false
@@ -20,7 +20,7 @@
   changed_when: false
 
 - name: Ensure the kubeadm join command is executed
-  shell: "kubeadm join {{ hostvars['control-plane-01']['control_plane_endpoint'] }} --token {{ hostvars['control-plane-01']['token'] }} --discovery-token-ca-cert-hash {{ hostvars['control-plane-01']['discovery_token_ca_cert_hash'] }}"
+  shell: "kubeadm join {{ kubeadm_extra }} {{ hostvars['k8s-cp-1']['control_plane_endpoint'] }} --token {{ hostvars['k8s-cp-1']['token'] }} --discovery-token-ca-cert-hash {{ hostvars['k8s-cp-1']['discovery_token_ca_cert_hash'] }}"
   when: node_check.failed
   register: join_result
   ignore_errors: true
@@ -32,7 +32,7 @@
   when: node_check.failed
 
 - name: Rejoin the node if it's not part of the cluster
-  shell: "kubeadm reset -f && kubeadm join {{ hostvars['control-plane-01']['control_plane_endpoint'] }} --token {{ hostvars['control-plane-01']['token'] }} --discovery-token-ca-cert-hash {{ hostvars['control-plane-01']['discovery_token_ca_cert_hash'] }}"
+  shell: "kubeadm reset -f && kubeadm join {{ hostvars['k8s-cp-1']['control_plane_endpoint'] }} --token {{ hostvars['k8s-cp-1']['token'] }} --discovery-token-ca-cert-hash {{ hostvars['k8s-cp-1']['discovery_token_ca_cert_hash'] }}"
   when: node_check.failed and join_result.failed
   ignore_errors: true
   changed_when: false
