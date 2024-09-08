@@ -7,3 +7,5 @@ I had success setting it up to automaticly run an ansible playbook against all t
 
 # TODO 
 I would like the build controllers to add the manifests and credentals via kubernetes, should be a better way to manage the resources
+
+https://artifacthub.io/packages/helm/cloudhippie/ansible-semaphore/10.0.14
