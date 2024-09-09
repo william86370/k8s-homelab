@@ -1,0 +1,16 @@
+
+- name: Get system hostname 
+  shell: "hostname -s"
+  register: node_name
+  changed_when: false
+
+- name: Set system hostname
+  set_fact:
+    k8s_name: "{{ node_name.stdout }}"
+  changed_when: false
+
+- name: Add All Taints to node
+  shell: "kubectl taint node --kubeconfig /etc/kubernetes/admin.conf --overwrite  {{ k8s_name }} {{ item }}"
+  changed_when: false
+  loop: "{{ kubernetes_taints }}"
+  ignore_errors: true

@@ -1,0 +1,20 @@
+# all nodes should have k8s installed on them
+- name: Add worker Label to nodes
+  hosts: all
+  become: yes
+  vars:
+    kubernetes_labels:
+      - node-role.kubernetes.io/worker=''
+  gather_facts: no
+  roles:
+    - label-nodes
+
+- name: Remove control-plane NoSchedule taint from nodes
+  hosts: all
+  become: yes
+  vars:
+    kubernetes_taints:
+      - node-role.kubernetes.io/control-plane:NoSchedule-
+  gather_facts: no
+  roles:
+    - taint-nodes

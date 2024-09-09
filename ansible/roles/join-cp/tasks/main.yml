@@ -1,0 +1,10 @@
+---
+- name: Check if the node is already part of the cluster
+  shell: "kubectl get node $(hostname -s) --kubeconfig=/etc/kubernetes/kubelet.conf"
+  register: node_check
+  changed_when: false
+  ignore_errors: true
+
+- name: include control-planes tasks
+  include_tasks: join.yml
+  when: node_check.failed

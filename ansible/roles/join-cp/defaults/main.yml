@@ -1,0 +1,2 @@
+---
+kubeadm_join_command: "{{ hostvars['k8s-cp-1']['control_plane_join'] }}"

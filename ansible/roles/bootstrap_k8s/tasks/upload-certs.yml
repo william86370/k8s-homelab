@@ -1,0 +1,14 @@
+---
+- name: Generate a random AES key (32 bytes)
+  shell: openssl rand -hex 32
+  register: key_output
+  changed_when: false
+  
+- name: Store the key as a variable
+  set_fact:
+    certificate_key: "{{ key_output.stdout }}"
+  changed_when: false
+
+- name: Upload Control-Plane Certs
+  shell: "kubeadm init phase upload-certs --upload-certs --skip-certificate-key-print --certificate-key {{ certificate_key }}"
+  changed_when: false

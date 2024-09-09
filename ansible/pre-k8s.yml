@@ -1,0 +1,21 @@
+# playbook for all andible things pre kubernetes, so configureing system and configurting netowkr and ensureing we are upto date 
+
+- hosts: all
+  become: yes
+  roles:
+    - system_upgrade
+    - sysctl
+    - k8s_vip_interface
+
+- hosts: all
+  become: yes
+  vars:
+    k8s_version: "v1.31"
+    containerd_version: "latest"
+    nerdctl_version: "latest"
+    runc_version: "latest"
+    cni_version: "latest"
+    crictl_version: "latest"
+  roles:
+    - install_containerd
+    - install_k8s

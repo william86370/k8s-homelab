@@ -1,0 +1,13 @@
+---
+
+# clean kubeadm configuration
+- name: Kubeadm reset
+  shell: "kubeadm reset -f"
+  ignore_errors: false
+  changed_when: false
+
+- name: join control-plane to k8s cluster 
+  shell: "{{ kubeadm_join_command }}"
+  register: join_result
+  ignore_errors: true
+  changed_when: false

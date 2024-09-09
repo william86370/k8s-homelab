@@ -4,13 +4,13 @@
     path: "/etc/kubernetes/.kubeadm_initialized"
   register: kubeadm_initialized
 
+# if the cluster is not bootstraped then bootstrap it now
 - name: Bootstrap the Kubernetes control plane
   include_tasks: bootstrap.yml
   when: not kubeadm_initialized.stat.exists
 
-- name: Fetch kubeconfig from the remote host
-  fetch:
-    src: "/etc/kubernetes/admin.conf"
-    dest: "./kubeconfig.yaml"
-    flat: yes
-  when: kubeadm_initialized.stat.exists
+- name: Generate a new k8s certificate-key
+  include_tasks: upload-certs.yml
+
+- name: Generate node join commands
+  include_tasks: join-command.yml

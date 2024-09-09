@@ -1,3 +1,4 @@
 ---
 kubeadm_config_file: "/etc/kubernetes/kubeadm-config.yaml"
 kubeadm_init_command: "kubeadm init --config {{ kubeadm_config_file }}"
+kubeconfig_dest_path: "./kubeconfig.yaml"
