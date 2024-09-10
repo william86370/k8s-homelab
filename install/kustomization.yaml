@@ -6,7 +6,7 @@ configMapGenerator:
   - name: global-config
     namespace: flux-system
     literals:
-      - replicas=1
+      - replicas=3
 
 # Flux installed resources
 resources:

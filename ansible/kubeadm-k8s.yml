@@ -12,9 +12,6 @@
   roles:
     - join-cp
 
-
-
-
 # - name: Join worker nodes to the Kubernetes cluster
 #   hosts: workers
 #   become: yes
