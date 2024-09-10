@@ -30,6 +30,15 @@ spec:
       - name: halfbaked
         devices:
           - name: /dev/sda  # 5TB disk
+
+      - name: k8s-cp-2
+        devices:
+          - name: /dev/sda  # 5TB disk
+
+      - name: k8s-cp-3
+        devices:
+          - name: /dev/sda  # 5TB disk
+
   healthCheck:
     daemonHealth:
       mon:
