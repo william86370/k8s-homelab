@@ -37,3 +37,9 @@
     regexp: 'swap'
     state: absent
   become: true
+
+# Remove ubuntu MOTD
+- name: Create .hushlogin file
+  file:
+    path: "/home/{{ ansible_user }}/.hushlogin"
+    state: touch

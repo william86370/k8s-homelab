@@ -1,6 +1,6 @@
 # all nodes should have k8s installed on them
 - name: Add worker Label to nodes
-  hosts: all
+  hosts: raspberry-pi
   become: yes
   vars:
     kubernetes_labels:
@@ -10,7 +10,7 @@
     - label-nodes
 
 - name: Remove control-plane NoSchedule taint from nodes
-  hosts: all
+  hosts: raspberry-pi
   become: yes
   vars:
     kubernetes_taints:
@@ -18,3 +18,14 @@
   gather_facts: no
   roles:
     - taint-nodes
+
+- name: Add rook-ceph labels to storage nodes
+  hosts: storage
+  become: yes
+  vars:
+    kubernetes_labels:
+      - rook-ceph-node='true'
+      - node-role.kubernetes.io/storage=''
+  gather_facts: no
+  roles:
+    - label-nodes

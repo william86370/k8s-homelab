@@ -6,14 +6,15 @@ k8s-cp-1 ansible_host=10.10.201.252 ansible_user=loot
 k8s-cp-2 ansible_host=10.10.201.194 ansible_user=loot
 k8s-cp-3 ansible_host=10.10.201.251 ansible_user=loot
 
-; [workers]
-; worker-r440 ansible_host=10.10.201.6 ansible_user=loot
-; worker-r620 ansible_host=10.10.201.155 ansible_user=loot
-; worker-r820 ansible_host=10.10.201.10 ansible_user=loot
+[control-plane]
+k8s-cp-1
+k8s-cp-2
+k8s-cp-3
 
-[control-plane:children]
-cp-leader
-cp-follower
+[raspberry-pi]
 
-[all:children]
-control-plane
+[storage]
+k8s-cp-1
+k8s-cp-2
+k8s-cp-3
+
