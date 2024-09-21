@@ -6,7 +6,7 @@ configMapGenerator:
   - name: global-config
     namespace: flux-system
     literals:
-      - replicas=3
+      - replicas=1
 
 # Flux installed resources
 resources:
@@ -19,6 +19,8 @@ resources:
   - capacitor
   - databases
   - semaphore
+  - pki-server
+
 # so it would define the number of replicas and in each helmrelease
 # then we can use the vars in the kustomization.yaml to set the number of replicas in the helmreleases
 generatorOptions:

@@ -29,3 +29,12 @@
   gather_facts: no
   roles:
     - label-nodes
+
+- hosts: raspberry-pi
+  become: yes
+  vars:
+    kubernetes_labels:
+      - lootbot.cloud/node-interfaces='k8s-vip'
+  roles:
+    - label-nodes
+    - k8s_vip_interface

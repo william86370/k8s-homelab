@@ -1,1 +1,8 @@
 kubeconfig.yaml
+*.key
+*.old
+
+example-ca/
+test-ca/
+tmp/
+lbcloud-pki-root-1/

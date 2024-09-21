@@ -1,0 +1,53 @@
+---
+apiVersion: helm.toolkit.fluxcd.io/v2
+kind: HelmRelease
+metadata:
+  name: pki-server
+  namespace: flux-system
+spec:
+  releaseName: pki-server
+  chart:
+    spec:
+      chart: nginx
+      sourceRef:
+        kind: HelmRepository
+        name: nginx
+        namespace: flux-system
+      version: '18.1.x'
+  interval: 60m
+  targetNamespace: pki-server
+  install:
+    createNamespace: false
+  # valuesFrom:
+  #   - kind: ConfigMap
+  #     name: global-config
+  #     valuesKey: replicas
+  #     targetPath: replicaCount
+  values:
+    cloneStaticSiteFromGit:
+      enabled: true
+      repository: https://github.com/william86370/lbcloud-pki.git
+      branch: main
+    tls:
+      enabled: false
+    service:
+      type: ClusterIP
+    ingress:
+      hostname: pki.lootbot.cloud
+      enabled: true
+      
+      annotations:
+        kubernetes.io/ingress.class: nginx
+    replicaCount: 2
+    podLabels:
+      lootbot.cloud/name: pki-server
+    affinity:
+      podAntiAffinity:
+        requiredDuringSchedulingIgnoredDuringExecution:
+        - labelSelector:
+            matchExpressions:
+            - key: lootbot.cloud/name
+              operator: In
+              values:
+              - pki-server
+          topologyKey: kubernetes.io/hostname

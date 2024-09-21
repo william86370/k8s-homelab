@@ -16,3 +16,8 @@ metadata:
 spec:
   ipAddressPools:
   - production-ips
+  nodeSelectors:
+    - matchLabels:
+        lootbot.cloud/node-interfaces: "k8s-vip"
+  interfaces:
+    - k8s-vip

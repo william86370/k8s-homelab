@@ -14,11 +14,11 @@ spec:
   targetNamespace: semaphore-system
   install:
     createNamespace: true
-  valuesFrom:
-    - kind: ConfigMap
-      name: global-config
-      valuesKey: replicas
-      targetPath: replicaCount
+  # valuesFrom:
+  #   - kind: ConfigMap
+  #     name: global-config
+  #     valuesKey: replicas
+  #     targetPath: replicaCount
   values:
     ingress:
       enabled: true
