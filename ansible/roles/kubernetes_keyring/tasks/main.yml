@@ -1,0 +1,23 @@
+---
+- name: Create directory for APT keyrings
+  file:
+    path: /etc/apt/keyrings
+    state: directory
+    mode: '0755'
+
+- name: Get the Kubernetes APT repository GPG key
+  command:
+    cmd: curl -fsSL https://pkgs.k8s.io/core:/stable:/{{ k8s_version }}/deb/Release.key -o /etc/apt/keyrings/kubernetes-apt-keyring.key
+    
+- name : Delete Old Kubernetes APT repository GPG key from the apt keyring
+  command:
+    cmd: rm -rf /etc/apt/keyrings/kubernetes-apt-keyring.gpg && rm -rf /etc/apt/keyrings/kubernetes-apt-keyring.asc && rm -rf /etc/apt/sources.list.d/pkgs_k8s_io_core_stable_v1_31_deb.list
+
+- name : Add the Kubernetes APT repository GPG key to the apt keyring
+  command:
+    cmd: gpg --dearmor -o /etc/apt/keyrings/kubernetes-apt-keyring.gpg /etc/apt/keyrings/kubernetes-apt-keyring.key
+
+- name: Add Kubernetes APT repository to sources list 
+  apt_repository:
+    repo: "deb [signed-by=/etc/apt/keyrings/kubernetes-apt-keyring.gpg] https://pkgs.k8s.io/core:/stable:/{{ k8s_version }}/deb/ /"
+    state: present

@@ -1,5 +1,8 @@
 ---
 - hosts: all
   become: yes
+  vars:
+    k8s_version: "v1.31"
   roles:
+    - kubernetes_keyring
     - system_upgrade
